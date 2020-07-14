@@ -1,15 +1,21 @@
 package pl.fanfatal.swipecontrollerdemo;
 
+import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE;
+import static androidx.recyclerview.widget.ItemTouchHelper.LEFT;
+
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper.Callback;
+import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
-
-import static android.support.v7.widget.helper.ItemTouchHelper.*;
+import androidx.annotation.DrawableRes;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper.Callback;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.button.MaterialButton;
 
 enum ButtonsState {
     GONE,
@@ -32,12 +38,13 @@ class SwipeController extends Callback {
     private static final float buttonWidth = 300;
 
     public SwipeController(SwipeControllerActions buttonsActions) {
+        super();
         this.buttonsActions = buttonsActions;
     }
 
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-        return makeMovementFlags(0, LEFT | RIGHT);
+        return makeMovementFlags(0, LEFT);
     }
 
     @Override
@@ -63,8 +70,10 @@ class SwipeController extends Callback {
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
         if (actionState == ACTION_STATE_SWIPE) {
             if (buttonShowedState != ButtonsState.GONE) {
-                if (buttonShowedState == ButtonsState.LEFT_VISIBLE) dX = Math.max(dX, buttonWidth);
-                if (buttonShowedState == ButtonsState.RIGHT_VISIBLE) dX = Math.min(dX, -buttonWidth);
+                if (buttonShowedState == ButtonsState.LEFT_VISIBLE)
+                    dX = Math.max(dX, buttonWidth * 2);
+                if (buttonShowedState == ButtonsState.RIGHT_VISIBLE)
+                    dX = Math.min(dX, - buttonWidth * 2);
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
             else {
@@ -147,39 +156,54 @@ class SwipeController extends Callback {
     }
 
     private void drawButtons(Canvas c, RecyclerView.ViewHolder viewHolder) {
-        float buttonWidthWithoutPadding = buttonWidth - 20;
-        float corners = 16;
+        float buttonWidthWithoutPadding = buttonWidth;
+        float corners = 8;
+        MaterialButton materialButton = new MaterialButton(viewHolder.itemView.getContext());
+        materialButton.setWidth(
+            (int) (60 * viewHolder.itemView.getContext().getResources().getDisplayMetrics().density));
+        materialButton.setHeight(
+            (int) (25 * viewHolder.itemView.getContext().getResources().getDisplayMetrics().density));
+        materialButton.draw(c);
 
-        View itemView = viewHolder.itemView;
+        /*View itemView = viewHolder.itemView;
         Paint p = new Paint();
 
-        RectF leftButton = new RectF(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + buttonWidthWithoutPadding, itemView.getBottom());
-        p.setColor(Color.BLUE);
-        c.drawRoundRect(leftButton, corners, corners, p);
-        drawText("EDIT", c, leftButton, p);
-
-        RectF rightButton = new RectF(itemView.getRight() - buttonWidthWithoutPadding, itemView.getTop(), itemView.getRight(), itemView.getBottom());
+        RectF rightButton = new RectF(
+            itemView.getRight() - buttonWidthWithoutPadding,
+            itemView.getTop(),
+            itemView.getRight(),
+            itemView.getBottom()
+        );
         p.setColor(Color.RED);
         c.drawRoundRect(rightButton, corners, corners, p);
-        drawText("DELETE", c, rightButton, p);
+        drawText(viewHolder.itemView.getContext().getString(R.string.edit), c, rightButton, p, viewHolder.itemView.getContext());
 
-        buttonInstance = null;
-        if (buttonShowedState == ButtonsState.LEFT_VISIBLE) {
-            buttonInstance = leftButton;
-        }
-        else if (buttonShowedState == ButtonsState.RIGHT_VISIBLE) {
-            buttonInstance = rightButton;
-        }
+        RectF leftButton = new RectF(
+            rightButton.left - buttonWidthWithoutPadding,
+            itemView.getTop(),
+            rightButton.left,
+            itemView.getBottom()
+        );
+        p.setColor(Color.BLUE);
+        c.drawRoundRect(leftButton, corners, corners, p);
+        drawText(viewHolder.itemView.getContext().getString(R.string.delete), c, leftButton, p, viewHolder.itemView.getContext());*/
     }
 
-    private void drawText(String text, Canvas c, RectF button, Paint p) {
-        float textSize = 60;
+    private void drawText(String text, Canvas c, RectF button, Paint p, Context context) {
+        float textSize = 14 * context.getResources().getDisplayMetrics().density;
         p.setColor(Color.WHITE);
         p.setAntiAlias(true);
         p.setTextSize(textSize);
 
         float textWidth = p.measureText(text);
-        c.drawText(text, button.centerX()-(textWidth/2), button.centerY()+(textSize/2), p);
+        c.drawText(text, button.centerX() - (textSize / 4), button.centerY() + (textSize / 2), p);
+        drawIcon(c, button, context, R.drawable.ic_baseline_account_circle);
+    }
+
+    private void drawIcon(Canvas c, RectF button, Context context, @DrawableRes int drawable) {
+        Drawable icon = ContextCompat.getDrawable(context, drawable);
+        icon.setBounds(0, 0, 100, 50);
+        icon.draw(c);
     }
 
     public void onDraw(Canvas c) {

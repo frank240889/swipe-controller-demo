@@ -1,19 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:focusable="true"
-    android:clickable="true"
-    android:layout_margin="8dp"
-    android:background="?android:attr/selectableItemBackground">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:focusable="true"
+  android:clickable="true"
+  android:layout_margin="8dp"
+  android:background="?android:attr/selectableItemBackground">
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/background"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:clickable="true">
 
+        <com.google.android.material.button.MaterialButton
+          android:id="@+id/ib_edit"
+          android:layout_width="wrap_content"
+          android:layout_height="0dp"
+          app:icon="@drawable/ic_edit"
+          android:text="@string/edit"
+          android:textSize="10sp"
+          app:cornerRadius="0dp"
+          android:background="?attr/selectableItemBackground"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.button.MaterialButton
+          android:id="@+id/ib_delete"
+          android:layout_width="wrap_content"
+          android:layout_height="0dp"
+          app:icon="@drawable/ic_delete"
+          android:text="@string/delete"
+          android:textSize="10sp"
+          app:cornerRadius="0dp"
+          android:background="?attr/selectableItemBackground"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/ib_edit"
+          app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
+        android:id="@+id/foreground"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="8dp"
+      android:background="#ffffffff"
+      android:clickable="true">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -78,4 +113,4 @@
 
     </LinearLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

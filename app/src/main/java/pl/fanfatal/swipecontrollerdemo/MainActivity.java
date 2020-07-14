@@ -1,17 +1,17 @@
 package pl.fanfatal.swipecontrollerdemo;
 
-import android.graphics.Canvas;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import pl.fanfatal.swipecontrollerdemo.RecyclerItemTouchHelper.RecyclerItemTouchHelperListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,8 +58,15 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(mAdapter);
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0,
+            ItemTouchHelper.LEFT, new RecyclerItemTouchHelperListener() {
+            @Override
+            public void onSwiped(ViewHolder viewHolder, int direction, int position) {
 
-        swipeController = new SwipeController(new SwipeControllerActions() {
+            }
+        });
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+        /*swipeController = new SwipeController(new SwipeControllerActions() {
             @Override
             public void onRightClicked(int position) {
                 mAdapter.players.remove(position);
@@ -76,6 +83,6 @@ public class MainActivity extends AppCompatActivity {
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
                 swipeController.onDraw(c);
             }
-        });
+        });*/
     }
 }

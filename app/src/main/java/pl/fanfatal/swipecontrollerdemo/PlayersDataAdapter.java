@@ -1,21 +1,27 @@
 package pl.fanfatal.swipecontrollerdemo;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 class PlayersDataAdapter extends RecyclerView.Adapter<PlayersDataAdapter.PlayerViewHolder> {
     public List<Player> players;
 
     public class PlayerViewHolder extends RecyclerView.ViewHolder {
+        ConstraintLayout background;
+        LinearLayout foreground;
+
         private TextView name, nationality, club, rating, age;
 
         public PlayerViewHolder(View view) {
             super(view);
+            background = view.findViewById(R.id.background);
+            foreground = view.findViewById(R.id.foreground);
             name = (TextView) view.findViewById(R.id.name);
             nationality = (TextView) view.findViewById(R.id.nationality);
             club = (TextView) view.findViewById(R.id.club);

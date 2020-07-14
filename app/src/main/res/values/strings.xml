@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SwipeControllDemo</string>
+  <string name="edit">Editar</string>
+  <string name="delete">Eliminar</string>
 </resources>
