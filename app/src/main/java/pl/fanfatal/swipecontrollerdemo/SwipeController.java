@@ -1,8 +1,5 @@
 package pl.fanfatal.swipecontrollerdemo;
 
-import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE;
-import static androidx.recyclerview.widget.ItemTouchHelper.LEFT;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,11 +8,14 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
+
 import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper.Callback;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.button.MaterialButton;
+
+import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE;
+import static androidx.recyclerview.widget.ItemTouchHelper.LEFT;
 
 enum ButtonsState {
     GONE,
@@ -156,16 +156,10 @@ class SwipeController extends Callback {
     }
 
     private void drawButtons(Canvas c, RecyclerView.ViewHolder viewHolder) {
-        float buttonWidthWithoutPadding = buttonWidth;
+        float buttonWidthWithoutPadding = buttonWidth - 20;
         float corners = 8;
-        MaterialButton materialButton = new MaterialButton(viewHolder.itemView.getContext());
-        materialButton.setWidth(
-            (int) (60 * viewHolder.itemView.getContext().getResources().getDisplayMetrics().density));
-        materialButton.setHeight(
-            (int) (25 * viewHolder.itemView.getContext().getResources().getDisplayMetrics().density));
-        materialButton.draw(c);
 
-        /*View itemView = viewHolder.itemView;
+        View itemView = viewHolder.itemView;
         Paint p = new Paint();
 
         RectF rightButton = new RectF(
@@ -186,7 +180,7 @@ class SwipeController extends Callback {
         );
         p.setColor(Color.BLUE);
         c.drawRoundRect(leftButton, corners, corners, p);
-        drawText(viewHolder.itemView.getContext().getString(R.string.delete), c, leftButton, p, viewHolder.itemView.getContext());*/
+        drawText(viewHolder.itemView.getContext().getString(R.string.delete), c, leftButton, p, viewHolder.itemView.getContext());
     }
 
     private void drawText(String text, Canvas c, RectF button, Paint p, Context context) {

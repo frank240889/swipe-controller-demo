@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<pl.fanfatal.swipecontrollerdemo.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/srl_reveal_container"
   android:focusable="true"
   android:clickable="true"
   android:layout_margin="8dp"
+    app:dragFromEdge="right"
   android:background="?android:attr/selectableItemBackground">
+
     <androidx.constraintlayout.widget.ConstraintLayout
-      android:id="@+id/background"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:clickable="true">
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true">
 
         <com.google.android.material.button.MaterialButton
-          android:id="@+id/ib_edit"
-          android:layout_width="wrap_content"
-          android:layout_height="0dp"
-          app:icon="@drawable/ic_edit"
-          android:text="@string/edit"
-          android:textSize="10sp"
-          app:cornerRadius="0dp"
-          android:background="?attr/selectableItemBackground"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="parent"/>
+            android:id="@+id/ib_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/edit"
+            android:textSize="10sp"
+            app:cornerRadius="0dp"
+            app:icon="@drawable/ic_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-          android:id="@+id/ib_delete"
-          android:layout_width="wrap_content"
-          android:layout_height="0dp"
-          app:icon="@drawable/ic_delete"
-          android:text="@string/delete"
-          android:textSize="10sp"
-          app:cornerRadius="0dp"
-          android:background="?attr/selectableItemBackground"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toStartOf="@+id/ib_edit"
-          app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/ib_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/delete"
+            android:textSize="10sp"
+            app:cornerRadius="0dp"
+            app:icon="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ib_edit"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
@@ -113,4 +116,4 @@
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</pl.fanfatal.swipecontrollerdemo.SwipeRevealLayout>

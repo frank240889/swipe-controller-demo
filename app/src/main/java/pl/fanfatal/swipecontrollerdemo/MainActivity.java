@@ -1,17 +1,18 @@
 package pl.fanfatal.swipecontrollerdemo;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import pl.fanfatal.swipecontrollerdemo.RecyclerItemTouchHelper.RecyclerItemTouchHelperListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,7 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        mAdapter = new PlayersDataAdapter(players);
+        mAdapter = new PlayersDataAdapter(players, new PlayersDataAdapter.PlayerViewHolder.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Log.d(this.getClass().getName(), v.getId()+"");
+            }
+        });
     }
 
     private void setupRecyclerView() {
@@ -58,14 +64,14 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(mAdapter);
-        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0,
+        /*ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0,
             ItemTouchHelper.LEFT, new RecyclerItemTouchHelperListener() {
             @Override
             public void onSwiped(ViewHolder viewHolder, int direction, int position) {
 
             }
-        });
-        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+        });*/
+       // new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
         /*swipeController = new SwipeController(new SwipeControllerActions() {
             @Override
             public void onRightClicked(int position) {
